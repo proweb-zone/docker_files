@@ -1,0 +1,23 @@
+version: '3'
+services:
+  manticore:
+    build: "DockerFiles/manticore"
+    environment:
+      - EXTRA=1
+    restart: always
+    volumes:
+      - ./manticore.conf/:/var/lib/manticore
+      - ./project/:/var/www/html
+    ports:
+      - 127.0.0.1:7306:9306
+      - 127.0.0.1:7308:9308
+    networks:
+      manticore-network:
+        ipv4_address: "172.33.0.3"
+
+networks:
+  manticore-network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.33.0.0/24
